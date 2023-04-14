@@ -3,26 +3,26 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Company extends Resource
+class Client extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Company>
+     * @var class-string<\App\Models\Client>
      */
-    public static $model = \App\Models\Company::class;
+    public static $model = \App\Models\Client::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -48,7 +48,7 @@ class Company extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            HasMany::make('Clients'),
+            BelongsTo::make('Company'),
         ];
     }
 

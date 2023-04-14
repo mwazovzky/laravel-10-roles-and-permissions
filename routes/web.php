@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\ProfileController;
@@ -28,6 +29,11 @@ Route::middleware('auth')->group(function () {
     Route::prefix('company')->group(function () {
         Route::get('/', [CompanyController::class, 'index'])->name('company.index');
         Route::get('/{company}', [CompanyController::class, 'show'])->name('company.show');
+    });
+
+    Route::prefix('client')->group(function () {
+        Route::get('/', [ClientController::class, 'index'])->name('client.index');
+        Route::get('/{client}', [ClientController::class, 'show'])->name('client.show');
     });
 });
 
