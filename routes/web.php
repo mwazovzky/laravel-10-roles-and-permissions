@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -22,6 +23,11 @@ Route::middleware('auth')->group(function () {
     Route::prefix('currency')->group(function () {
         Route::get('/', [CurrencyController::class, 'index'])->name('currency.index');
         Route::get('/{currency}', [CurrencyController::class, 'show'])->name('currency.show');
+    });
+
+    Route::prefix('company')->group(function () {
+        Route::get('/', [CompanyController::class, 'index'])->name('company.index');
+        Route::get('/{company}', [CompanyController::class, 'show'])->name('company.show');
     });
 });
 
