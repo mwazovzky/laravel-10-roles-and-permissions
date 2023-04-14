@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -9,11 +10,26 @@ use Inertia\Inertia;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
+*/
+
+/*
+|--------------------------------------------------------------------------
+| App Routes 
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('auth')->group(function () {
+    Route::prefix('currency')->group(function () {
+        Route::get('/', [CurrencyController::class, 'index'])->name('currency.index');
+        Route::get('/{currency}', [CurrencyController::class, 'show'])->name('currency.show');
+    });
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Routes registered by laravel breeze
+|--------------------------------------------------------------------------
 */
 
 Route::get('/', function () {
@@ -35,4 +51,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
