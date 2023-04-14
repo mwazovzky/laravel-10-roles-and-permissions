@@ -21,7 +21,14 @@ class Currency extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'symbol';
+
+    /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Admin';
 
     /**
      * The columns that should be searched.

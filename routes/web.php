@@ -4,6 +4,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,6 +35,11 @@ Route::middleware('auth')->group(function () {
     Route::prefix('client')->group(function () {
         Route::get('/', [ClientController::class, 'index'])->name('client.index');
         Route::get('/{client}', [ClientController::class, 'show'])->name('client.show');
+    });
+
+    Route::prefix('transaction')->group(function () {
+        Route::get('/', [TransactionController::class, 'index'])->name('transaction.index');
+        Route::get('/{transaction}', [TransactionController::class, 'show'])->name('transaction.show');
     });
 });
 

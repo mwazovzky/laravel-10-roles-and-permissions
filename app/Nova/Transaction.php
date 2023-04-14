@@ -2,34 +2,38 @@
 
 namespace App\Nova;
 
+use App\Enums\Transactions\Status;
+use App\Enums\Transactions\Type;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Client extends Resource
+class Transaction extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Client>
+     * @var class-string<\App\Models\Transaction>
      */
-    public static $model = \App\Models\Client::class;
+    public static $model = \App\Models\Transaction::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The logical group associated with the resource.
      *
      * @var string
      */
-    public static $group = 'Admin';
+    public static $group = 'Back Office';
 
     /**
      * The columns that should be searched.
@@ -37,7 +41,7 @@ class Client extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name',
+        'id',
     ];
 
     /**
@@ -51,11 +55,28 @@ class Client extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Name')
+            Text::make('Type')
+                ->sortable()
+                ->rules(Rule::in(Type::cases())),
+
+            Text::make('Status')
+                ->sortable()
+                ->rules(Rule::in(Status::cases())),
+
+            Text::make('Txid')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            BelongsTo::make('Company'),
+            Number::make('Vout')
+                ->rules('required', 'integer', 'min:1'),
+
+            Number::make('Amount')
+                ->sortable()
+                ->rules('required', 'decimal:0,8', 'min:0'),
+
+            BelongsTo::make('Currency'),
+
+            BelongsTo::make('Client'),
         ];
     }
 

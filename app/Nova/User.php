@@ -27,6 +27,13 @@ class User extends Resource
     public static $title = 'name';
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Acl';
+
+    /**
      * The columns that should be searched.
      *
      * @var array
