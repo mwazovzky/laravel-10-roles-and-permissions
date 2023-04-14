@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -56,6 +57,8 @@ class Company extends Resource
                 ->rules('required', 'max:255'),
 
             HasMany::make('Clients'),
+
+            BelongsToMany::make('Users'),
         ];
     }
 
