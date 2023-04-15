@@ -19,6 +19,7 @@ return new class extends Migration
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('CASCADE');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->unique(['company_id', 'user_id']);
         });
     }
 

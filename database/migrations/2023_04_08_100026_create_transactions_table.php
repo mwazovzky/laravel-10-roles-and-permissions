@@ -24,6 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('client_id')->nullable();
             $table->timestamps();
 
+            $table->unique(['currency_id', 'txid', 'vout']);
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('SET NULL');
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('SET NULL');
         });
