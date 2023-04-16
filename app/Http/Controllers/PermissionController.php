@@ -2,41 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CurrencyCreateRequest;
-use App\Models\Currency;
+use App\Models\Permission;
 
-class CurrencyController extends Controller
+class PermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Currency::all();
+        return Permission::all();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CurrencyCreateRequest $request)
+    public function store()
     {
-        return Currency::factory()->create();
+        return Permission::factory()->create();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Currency $currency)
+    public function show(Permission $permission)
     {
-        return $currency;
+        return $permission;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Currency $currency)
+    public function destroy(Permission $permission)
     {
-        $currency->delete();
+        $permission->delete();
 
         return response()->json([], 204);
     }

@@ -2,41 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CurrencyCreateRequest;
-use App\Models\Currency;
+use App\Models\User;
 
-class CurrencyController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Currency::all();
+        return User::all();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CurrencyCreateRequest $request)
+    public function store()
     {
-        return Currency::factory()->create();
+        return User::factory()->create();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Currency $currency)
+    public function show(User $user)
     {
-        return $currency;
+        return $user;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Currency $currency)
+    public function destroy(User $user)
     {
-        $currency->delete();
+        $user->delete();
 
         return response()->json([], 204);
     }

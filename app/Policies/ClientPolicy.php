@@ -13,7 +13,7 @@ class ClientPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -21,7 +21,7 @@ class ClientPolicy
      */
     public function view(User $user, Client $client): bool
     {
-        return true;
+        return false;
     }
 
     /**

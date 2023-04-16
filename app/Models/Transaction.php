@@ -30,4 +30,14 @@ class Transaction extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    public function confirm(): bool
+    {
+        return $this->update(['status' => Status::CONFIRMED]);
+    }
+
+    public function cancel(): bool
+    {
+        return $this->update(['status' => Status::CANCELLED]);
+    }
 }

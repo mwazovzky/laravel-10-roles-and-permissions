@@ -2,18 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Currency;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StoreClientRequest extends FormRequest
+class CurrencyCreateRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return false;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
