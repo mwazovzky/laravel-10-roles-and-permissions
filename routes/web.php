@@ -60,10 +60,10 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('currency')->group(function () {
-        Route::get('/', [CurrencyController::class, 'index']);
-        Route::get('/store', [CurrencyController::class, 'store']);
-        Route::get('/{currency}', [CurrencyController::class, 'show']);
-        Route::get('/{currency}/destroy', [CurrencyController::class, 'destroy']);
+        Route::get('/', [CurrencyController::class, 'index']); // use controller helper to autorize action
+        Route::get('/store', [CurrencyController::class, 'store']); // use form request to autorize action
+        Route::get('/{currency}', [CurrencyController::class, 'show'])->can('view', 'currency');
+        Route::get('/{currency}/destroy', [CurrencyController::class, 'destroy'])->can('delete', 'currency');
     });
 
     Route::prefix('company')->group(function () {

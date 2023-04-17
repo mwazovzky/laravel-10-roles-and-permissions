@@ -13,7 +13,7 @@ class CurrencyPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->hasPermission('currency.viewAny');
     }
 
     /**
@@ -21,7 +21,7 @@ class CurrencyPolicy
      */
     public function view(User $user, Currency $currency): bool
     {
-        return false;
+        return $user->hasPermission('currency.view');
     }
 
     /**
@@ -29,7 +29,7 @@ class CurrencyPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->hasPermission('currency.create');
     }
 
     /**
@@ -37,7 +37,7 @@ class CurrencyPolicy
      */
     public function update(User $user, Currency $currency): bool
     {
-        return false;
+        return $user->hasPermission('currency.update');
     }
 
     /**
@@ -45,7 +45,7 @@ class CurrencyPolicy
      */
     public function delete(User $user, Currency $currency): bool
     {
-        return false;
+        return $user->hasPermission('currency.delete');
     }
 
     /**

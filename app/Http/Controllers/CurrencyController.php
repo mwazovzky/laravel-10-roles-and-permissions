@@ -12,6 +12,8 @@ class CurrencyController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Currency::class);
+
         return Currency::all();
     }
 
