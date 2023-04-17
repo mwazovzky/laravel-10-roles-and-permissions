@@ -2,6 +2,8 @@
 
 namespace App\Policies;
 
+use App\Models\Client;
+use App\Models\Company;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -11,9 +13,12 @@ class TransactionPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user, Company $company = null, Client $client = null): bool
     {
-        return false;
+        return $user->hasPermission('transaction.viewAny') &&
+            $user->isAdmin() ||
+            $company && $user->belongsToComany($company) ||
+            $client && $user->belongsToClient($client);
     }
 
     /**
@@ -21,7 +26,7 @@ class TransactionPolicy
      */
     public function view(User $user, Transaction $transaction): bool
     {
-        return false;
+        return $user->hasPermission('transaction.view') && $user->belongsToClient($transaction->client);
     }
 
     /**
@@ -29,7 +34,7 @@ class TransactionPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->hasPermission('transaction.create') && $user->client;
     }
 
     /**
@@ -37,7 +42,7 @@ class TransactionPolicy
      */
     public function update(User $user, Transaction $transaction): bool
     {
-        return false;
+        return $user->hasPermission('transaction.update') && $user->belongsToClient($transaction->client);
     }
 
     /**
@@ -45,7 +50,7 @@ class TransactionPolicy
      */
     public function delete(User $user, Transaction $transaction): bool
     {
-        return false;
+        return $user->hasPermission('transaction.delete') && $user->belongsToClient($transaction->client);
     }
 
     /**

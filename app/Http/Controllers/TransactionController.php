@@ -11,6 +11,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Transaction::class);
+
         return Transaction::all();
     }
 

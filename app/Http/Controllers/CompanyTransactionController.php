@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Transactions\Status;
 use App\Models\Company;
 use App\Models\Transaction;
 
@@ -10,6 +9,8 @@ class CompanyTransactionController extends Controller
 {
     public function index(Company $company)
     {
+        $this->authorize('viewAny', [Transaction::class, $company]);
+
         return $company->transactions;
     }
 

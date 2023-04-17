@@ -9,6 +9,8 @@ class ClientTransactionController extends Controller
 {
     public function index(Client $client)
     {
+        $this->authorize('viewAny', [Transaction::class, null, $client]);
+
         return $client->transactions;
     }
 

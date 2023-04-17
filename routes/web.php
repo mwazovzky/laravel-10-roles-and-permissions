@@ -15,6 +15,7 @@ use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRoleController;
+use App\Models\Transaction;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -81,8 +82,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('transaction')->group(function () {
-        Route::get('/', [TransactionController::class, 'index']);
-        Route::get('/{transaction}', [TransactionController::class, 'show']);
+        Route::get('/', [TransactionController::class, 'index'])->can('viewAny', Transaction::class);
+        Route::get('/{transaction}', [TransactionController::class, 'show'])->can('view', 'transaction');
     });
 
     Route::prefix('company/{company}')->group(function () {
@@ -99,10 +100,10 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::prefix('transaction')->group(function () {
-            Route::get('/', [CompanyTransactionController::class, 'index']);
-            Route::get('/{transaction}', [CompanyTransactionController::class, 'show']);
-            Route::get('/{transaction}/confirm', [CompanyTransactionController::class, 'confirm']);
-            Route::get('/{transaction}/cancel', [CompanyTransactionController::class, 'cancel']);
+            Route::get('/', [CompanyTransactionController::class, 'index'])->can('viewAny', 'company', Transaction::class);
+            Route::get('/{transaction}', [CompanyTransactionController::class, 'show'])->can('view', 'transaction');
+            Route::get('/{transaction}/confirm', [CompanyTransactionController::class, 'confirm'])->can('update', 'transaction');
+            Route::get('/{transaction}/cancel', [CompanyTransactionController::class, 'cancel'])->can('update', 'transaction');
         });
     });
 
@@ -115,9 +116,9 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::prefix('transaction')->group(function () {
-            Route::get('/', [ClientTransactionController::class, 'index']);
-            Route::get('/store', [ClientTransactionController::class, 'store']);
-            Route::get('/{transaction}', [ClientTransactionController::class, 'show']);
+            Route::get('/', [ClientTransactionController::class, 'index']); // use controller helper to autorize action
+            Route::get('/store', [ClientTransactionController::class, 'store'])->can('create', Transaction::class);
+            Route::get('/{transaction}', [ClientTransactionController::class, 'show'])->can('view', 'transaction');
         });
     });
 });

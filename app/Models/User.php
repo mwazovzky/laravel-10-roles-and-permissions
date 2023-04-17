@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -41,6 +42,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function companies(): BelongsToMany
+    {
+        return $this->BelongsToMany(Company::class);
+    }
+
+    public function clients(): BelongsToMany
+    {
+        return $this->BelongsToMany(Client::class);
+    }
 
     public function role(): BelongsTo
     {
@@ -81,5 +92,33 @@ class User extends Authenticatable
             ->toArray();
 
         return count(array_diff($permissions, $userPermissions)) == 0;
+    }
+
+    /**
+     * @todo: temporarily
+     */
+    public function isAdmin(): bool
+    {
+        return $this->name == 'alex';
+    }
+
+    public function belongsToComany(Company $company): bool
+    {
+        return $this->companies()->where('companies.id', $company->id)->exists();
+    }
+
+    public function belongsToClient(Client $client): bool
+    {
+        return $this->belongsToClientDirectly($client) || $this->belongsToClientThroughCompany($client);
+    }
+
+    public function belongsToClientDirectly(Client $client): bool
+    {
+        return $this->clients()->where('clients.id', $client->id)->exists();
+    }
+
+    public function belongsToClientThroughCompany(Client $client): bool
+    {
+        return $this->companies()->whereHas('clients', fn ($query) => $query->where('clients.id', $client->id))->exists();
     }
 }
