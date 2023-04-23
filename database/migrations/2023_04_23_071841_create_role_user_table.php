@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permission_role', function (Blueprint $table) {
+        Schema::create('role_user', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('role_id');
-            $table->unsignedBigInteger('permission_id');
+            $table->unsignedBigInteger('user_id');
+            $table->string('scope_type');
+            $table->unsignedBigInteger('scope_id')->nullable();
+            $table->unsignedBigInteger('role_id')->nullable();
             $table->timestamps();
 
+            $table->unique(['scope_type', 'scope_id', 'role_id']);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('CASCADE');
-            $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('CASCADE');
-            $table->unique(['role_id', 'permission_id']);
         });
     }
 
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permission_role');
+        Schema::dropIfExists('role_user');
     }
 };
