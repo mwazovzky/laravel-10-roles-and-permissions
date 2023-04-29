@@ -60,6 +60,8 @@ class Company extends Resource
             HasMany::make('Clients'),
 
             BelongsToMany::make('Roles'),
+
+            MorphToMany::make('Users'),
         ];
     }
 
