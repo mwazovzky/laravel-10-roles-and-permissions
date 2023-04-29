@@ -59,4 +59,30 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class)->withPivot('scope_type', 'scope_id');
     }
+
+    public function hasAdminPermission(string $permission): bool
+    {
+        return $this->roles()
+            ->where('scope_type', 'admin')
+            ->whereHas('permissions', fn ($query) => $query->where('name', $permission))
+            ->exists();
+    }
+
+    public function hasCompanyPermission(Company $company, string $permission): bool
+    {
+        return $this->roles()
+            ->where('scope_type', 'company')
+            ->where('scope_id', $company->id)
+            ->whereHas('permissions', fn ($query) => $query->where('name', $permission))
+            ->exists();
+    }
+
+    public function hasClientPermission(Client $client, string $permission): bool
+    {
+        return $this->roles()
+            ->where('scope_type', 'client')
+            ->where('scope_id', $client->id)
+            ->whereHas('permissions', fn ($query) => $query->where('name', $permission))
+            ->exists();
+    }
 }
