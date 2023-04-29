@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -59,6 +60,8 @@ class Role extends Resource
                 ->rules('required', 'max:255'),
 
             BelongsToMany::make('Permissions'),
+
+            BelongsToMany::make('Companies'),
         ];
     }
 
