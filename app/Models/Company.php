@@ -25,4 +25,9 @@ class Company extends Model
     {
         return $this->belongsToMany(Role::class)->withTimestamps();
     }
+
+    public function users(): MorphToMany
+    {
+        return $this->morphToMany(User::class, 'scope', 'role_user');
+    }
 }
