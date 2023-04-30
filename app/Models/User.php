@@ -85,4 +85,9 @@ class User extends Authenticatable
             ->whereHas('permissions', fn ($query) => $query->where('name', $permission))
             ->exists();
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->name == 'alex';
+    }
 }

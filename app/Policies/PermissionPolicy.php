@@ -13,7 +13,7 @@ class PermissionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
@@ -21,7 +21,7 @@ class PermissionPolicy
      */
     public function view(User $user, Permission $permission): bool
     {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
@@ -29,7 +29,7 @@ class PermissionPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
@@ -45,7 +45,7 @@ class PermissionPolicy
      */
     public function delete(User $user, Permission $permission): bool
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
